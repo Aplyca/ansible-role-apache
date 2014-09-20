@@ -1,8 +1,8 @@
 ---
 apache:
   Listen: 80
-  ServerTokens: Prod
-  ServerSignature: Off
+  ServerTokens: "Prod"
+  ServerSignature: "Off"
   enable_modules:
     - rewrite
   disable_modules:

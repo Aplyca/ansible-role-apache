@@ -1,10 +1,14 @@
 ---
 - name: Ensure Apache is present using yum
   sudo: yes
-  yum: name=httpd state=present
+  yum: 
+    name: httpd
+    state: present
   when: ansible_os_family == 'RedHat'
 
 - name: Ensure Apache is present using apt
   sudo: yes
-  apt: name=apache2 state=present
+  apt: 
+    name: apache2
+    state: present
   when: ansible_os_family == 'Debian'
