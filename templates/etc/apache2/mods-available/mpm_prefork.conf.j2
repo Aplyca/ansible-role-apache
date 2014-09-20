@@ -1,0 +1,19 @@
+# {{ ansible_managed }}
+
+# prefork MPM
+# StartServers: number of server processes to start
+# MinSpareServers: minimum number of server processes which are kept spare
+# MaxSpareServers: maximum number of server processes which are kept spare
+# MaxRequestWorkers: maximum number of server processes allowed to start
+# MaxConnectionsPerChild: maximum number of requests a server process serves
+
+<IfModule mpm_prefork_module>
+        StartServers {{ apache["StartServers"] | default("5") }}
+        MinSpareServers {{ apache["MinSpareServers"] | default("5") }}
+        MaxSpareServers {{ apache["MaxSpareServers"] | default("10") }}
+        MaxRequestWorkers {{ apache["MaxRequestWorkers"] | default("150") }}
+        MaxConnectionsPerChild {{ apache["MaxConnectionsPerChild"] | default("0") }}
+
+</IfModule>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
