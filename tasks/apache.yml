@@ -7,15 +7,25 @@
 
 - name: Main configuration of Apache
   sudo: yes
-  template: src=etc/apache2/apache2.conf.j2 dest=/etc/apache2/apache2.conf
+  template:
+    src: etc/apache2/apache2.conf.j2
+    dest: /etc/apache2/apache2.conf
   notify: reload apache
   when: ansible_os_family == 'Debian'
 
 - name: Configure MPM Prefork of Apache
   sudo: yes
-  template: src=etc/apache2/mods-available/mpm_prefork.conf.j2 dest=/etc/apache2/mods-available/mpm_prefork.conf
+  template:
+    src: etc/apache2/mods-available/mpm_prefork.conf.j2
+    dest: /etc/apache2/mods-available/mpm_prefork.conf
   notify: reload apache
   when: ansible_os_family == 'Debian'
+
+- name: Make sure conf available directory exists
+  sudo: yes
+  file:
+    path: /etc/apache2/conf-available
+    state: directory
 
 - name: Configure Security of Apache
   sudo: yes
