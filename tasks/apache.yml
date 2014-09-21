@@ -5,14 +5,6 @@
   notify: restart apache
   when: ansible_os_family == 'Debian'
 
-- name: Main configuration of Apache
-  sudo: yes
-  template:
-    src: etc/apache2/apache2.conf.j2
-    dest: /etc/apache2/apache2.conf
-  notify: reload apache
-  when: ansible_os_family == 'Debian'
-
 - name: Configure MPM Prefork of Apache
   sudo: yes
   template:
