@@ -12,10 +12,10 @@
 
 - name: Check if conf.d directory exists
   stat:
-    path: /etc/apache2/conf-available
+    path: /etc/apache2/conf.d
   register: confd
 
-- name: Make sure the override conf for Apache is present
+- name: Make sure the override conf available for Apache is present
   sudo: yes
   template:
     src: etc/apache2/conf-available/override.conf.j2
