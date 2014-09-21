@@ -10,6 +10,11 @@
     path: /etc/apache2/conf-available
   register: conf-available
 
+- name: Check if conf.d directory exists
+  stat:
+    path: /etc/apache2/conf-available
+  register: confd
+
 - name: Make sure the override conf for Apache is present
   sudo: yes
   template:
@@ -17,6 +22,14 @@
     dest: /etc/apache2/conf-available/override.conf
   notify: reload apache
   when: ansible_os_family == 'Debian' and conf-available.stat.isdir is defined and conf-available.stat.isdir == true
+
+- name: Make sure the override conf for Apache is present
+  sudo: yes
+  template:
+    src: etc/apache2/conf.d/override.conf.j2
+    dest: /etc/apache2/conf.d/override.conf
+  notify: reload apache
+  when: ansible_os_family == 'Debian' and confd.stat.isdir is defined and confd.stat.isdir == true
 
 - name: Enable override configuration in Apache
   sudo: yes
