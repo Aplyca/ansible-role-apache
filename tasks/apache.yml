@@ -5,20 +5,10 @@
   notify: restart apache
   when: ansible_os_family == 'Debian'
 
-- name: Configure MPM Prefork of Apache
-  sudo: yes
-  template:
-    src: etc/apache2/mods-available/mpm_prefork.conf.j2
-    dest: /etc/apache2/mods-available/mpm_prefork.conf
-  notify: reload apache
-  when: ansible_os_family == 'Debian'
-
-- name: Make sure conf available directory exists
-  sudo: yes
-  file:
+- name: Check if conf available directory exists
+  stat:
     path: /etc/apache2/conf-available
-    state: directory
-  when: ansible_os_family == 'Debian'
+  register: conf-available
 
 - name: Make sure the override conf for Apache is present
   sudo: yes
@@ -26,11 +16,19 @@
     src: etc/apache2/conf-available/override.conf.j2
     dest: /etc/apache2/conf-available/override.conf
   notify: reload apache
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian' and conf-available.stat.isdir is defined and conf-available.stat.isdir == true
 
 - name: Enable override configuration in Apache
   sudo: yes
   command: a2enconf override
+  notify: reload apache
+  when: ansible_os_family == 'Debian' and conf-available.stat.isdir is defined and conf-available.stat.isdir == true
+
+- name: Configure MPM Prefork of Apache
+  sudo: yes
+  template:
+    src: etc/apache2/mods-available/mpm_prefork.conf.j2
+    dest: /etc/apache2/mods-available/mpm_prefork.conf
   notify: reload apache
   when: ansible_os_family == 'Debian'
 

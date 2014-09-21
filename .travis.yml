@@ -12,6 +12,7 @@ before_install:
 install:
   - sudo apt-get install -y curl
   - sudo apt-get install python-pip
+
   # Install Ansible.
   - sudo pip install ansible
 
@@ -33,5 +34,7 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   - "ls -la /etc/apache2"
+  - "ls -la /etc/apache2/conf.d"
+  - "man a2enconf"
   # Request a page via Apache, to make sure Apache is running and responds.
   - "curl http://localhost/"
