@@ -32,5 +32,6 @@ script:
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
+  - "ls -la /etc/apache2"
   # Request a page via Apache, to make sure Apache is running and responds.
   - "curl http://localhost/"
