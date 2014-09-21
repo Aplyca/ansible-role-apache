@@ -1,6 +1,7 @@
 ---
 apache:
-  Listen: 80
+  Listen:
+    - 80
   ServerTokens: "Prod"
   ServerSignature: "Off"
   enable_modules:

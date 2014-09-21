@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+
+# Global
+Timeout {{ apache["Timeout"] | default("300") }}
+KeepAlive {{ apache["KeepAlive"] | default("On") }}
+MaxKeepAliveRequests {{ apache["MaxKeepAliveRequests"] | default("100") }}
+KeepAliveTimeout {{ apache["KeepAliveTimeout"] | default("5") }}
+LogLevel {{ apache["LogLevel"] | default("warn") }}
+
+# Security
+ServerTokens {{ apache["ServerTokens"] | default("OS") }}
+ServerSignature {{ apache["ServerSignature"] | default("On") }}
+TraceEnable {{ apache["TraceEnable"] | default("Off") }}

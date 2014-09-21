@@ -4,7 +4,9 @@
 # have to change the VirtualHost statement in
 # /etc/apache2/sites-enabled/000-default.conf
 
-Listen {{ apache["Listen"] | default("80") }}
+{% for port in apache["Listen"] %}
+Listen {{ port }}
+{% endfor %}
 
 <IfModule ssl_module>
         Listen 443

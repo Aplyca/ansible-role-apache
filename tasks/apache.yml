@@ -26,12 +26,19 @@
   file:
     path: /etc/apache2/conf-available
     state: directory
+  when: ansible_os_family == 'Debian'
 
-- name: Configure Security of Apache
+- name: Make sure the override conf for Apache is present
   sudo: yes
   template:
-    src: etc/apache2/conf-available/security.conf.j2
-    dest: /etc/apache2/conf-available/security.conf
+    src: etc/apache2/conf-available/override.conf.j2
+    dest: /etc/apache2/conf-available/override.conf
+  notify: reload apache
+  when: ansible_os_family == 'Debian'
+
+- name: Enable override configuration in Apache
+  sudo: yes
+  command: a2enconf override
   notify: reload apache
   when: ansible_os_family == 'Debian'
 
