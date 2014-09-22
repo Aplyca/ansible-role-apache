@@ -22,7 +22,7 @@
   sudo: yes
   lineinfile:
     dest: "{{ apache['server_root'] }}/{{ apache['service'] }}.conf"
-    line: "IncludeOptional conf-enabled/*.conf"
+    line: "Include conf-enabled/*.conf"
     state: present
   notify: reload apache  
   when: confd.stat.isdir is defined and confd.stat.isdir == true    
