@@ -1,0 +1,17 @@
+ # {{ ansible_managed }}
+
+<VirtualHost *:{{ apache['Listen'] }}>
+    DocumentRoot {{ apache['virtualhost']['DocumentRoot'] }}
+
+    ServerName {{ website['virtualhost']['ServerName'] }}
+    {% for serveralias in website['virtualhost']['ServerAlias'] %}
+    ServerAlias {{ serveralias }}
+    {% endfor %}
+
+    ErrorLog {{ website['virtualhost']['ErrorLog'] }}
+    CustomLog {{ website['virtualhost']['CustomLog'] }} combined
+    {% if website['virtualhost']['IncludeOptional'] is defined %}
+
+    IncludeOptional "{{ website['virtualhost']['IncludeOptional'] }}"
+    {% endif %}
+</VirtualHost>

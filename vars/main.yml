@@ -1,0 +1,6 @@
+---
+apache:
+    conf_available_path: conf-available
+    sites_available_path: sites-available
+    conf_enabled_path: conf-enabled
+    sites_enabled_path: sites-enabled

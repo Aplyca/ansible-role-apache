@@ -1,0 +1,31 @@
+---
+- name: Configure ports of Apache
+  sudo: yes
+  template:
+    src: etc/apache2/ports.conf.j2
+    dest: "{{ apache['server_root'] }}/ports.conf"
+  notify: restart apache
+
+- name: Make sure configuration directories are present
+  sudo: yes
+  file:
+    path: "{{ apache['server_root'] }}/{{ item }}"
+    state: directory
+  with_items:
+    - sites-available
+    - sites-enabled
+    - conf-available
+    - conf-enabled
+
+- name: Make sure the override conf is present
+  sudo: yes
+  template:
+    src: etc/apache2/conf-available/override.conf.j2
+    dest: "{{ apache['server_root'] }}/{{ apache['conf_available_path'] }}/override.conf"
+  
+- name: Configure MPM prefork
+  sudo: yes
+  template:
+    src: etc/apache2/mods-available/mpm_prefork.conf.j2
+    dest: "{{ apache['mods_path'] }}/mpm_prefork.conf"
+  notify: reload apache  

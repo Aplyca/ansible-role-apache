@@ -1,0 +1,12 @@
+---
+- name: Make sure the enabled configuration are present
+  sudo: yes
+  file:
+    src: "../{{ apache['conf_available_path'] }}/{{ item }}"
+    path: "{{ apache['server_root'] }}/{{ apache['conf_enabled_path'] }}/{{ item }}"
+    state: link
+    force: yes
+  with_items:
+    - override.conf
+  notify: reload apache    
+    

@@ -1,0 +1,38 @@
+---
+- name: Ensure Apache is present using apt
+  sudo: yes
+  apt: 
+    name: apache2
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- include: setup.yml
+
+- name: Check if conf available directory exists
+  stat:
+    path: /etc/apache2/conf.d
+  register: confd
+
+- name: Enable override configuration in Apache
+  sudo: yes
+  command: a2enconf override
+  notify: reload apache
+  when: ansible_os_family == 'Debian' and confd.stat.isdir is defined and confd.stat.isdir == false
+
+- name: Enable Apache modules
+  sudo: yes
+  apache2_module:
+    name: "{{ item }}"
+    state: present
+  with_items: apache["enable_modules"]
+  notify: reload apache
+  when: apache["enable_modules"]
+
+- name: Disable Apache modules
+  sudo: yes
+  apache2_module:
+    name: "{{ item }}"
+    state: absent
+  with_items: apache["disable_modules"]
+  notify: reload apache
+  when: apache["disable_modules"]
