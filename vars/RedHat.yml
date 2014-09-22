@@ -2,4 +2,4 @@
 apache:
     service: httpd
     server_root: /etc/httpd
-    mods_path: /etc/httpd/conf.modules.d
+    mods_available_path: conf.modules.d

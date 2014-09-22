@@ -27,5 +27,5 @@
   sudo: yes
   template:
     src: etc/apache2/mods-available/mpm_prefork.conf.j2
-    dest: "{{ apache['mods_path'] }}/mpm_prefork.conf"
+    dest: "{{ apache['server_root'] }}/{{ apache['mods_available_path'] }}/mpm_prefork.conf"
   notify: reload apache  
