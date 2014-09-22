@@ -1,3 +1,4 @@
 ---
 apache:
     service: apache2
+    server_root: /etc/apache2
