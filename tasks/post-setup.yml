@@ -2,13 +2,10 @@
 - name: Make sure the enabled configuration are present
   sudo: yes
   file:
-    src: "../{{ apache['conf_available_path'] }}/{{ item.name }}"
-    path: "{{ apache['server_root'] }}/{{ apache['conf_enabled_path'] }}/{{ item.priority }}-{{ item.name }}"
+    src: "../{{ apache['conf_available_path'] }}/{{ item.value }}"
+    path: "{{ apache['server_root'] }}/{{ apache['conf_enabled_path'] }}/{{ item.key }}-{{ item.value }}"
     state: link
     force: yes
-  with_items:
-    - { priority: z10,
-        name: override.conf
-      }
+  with_dict: apache["extra_conf"]
   notify: reload apache    
     

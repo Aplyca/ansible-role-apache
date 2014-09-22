@@ -4,7 +4,6 @@
   apt: 
     name: apache2
     state: present
-  when: ansible_os_family == 'Debian'
 
 - include: setup.yml
 
@@ -13,11 +12,20 @@
     path: /etc/apache2/conf.d
   register: confd
 
-- name: Enable override configuration in Apache
+- name: Enable override configuration
   sudo: yes
   command: a2enconf override
   notify: reload apache
-  when: ansible_os_family == 'Debian' and confd.stat.isdir is defined and confd.stat.isdir == false
+  when: confd.stat.isdir is defined and confd.stat.isdir == false
+
+- name: Enable override configuration for previous Debian releases
+  sudo: yes
+  lineinfile:
+    dest: "{{ apache['server_root'] }}/{{ apache['service'] }}.conf"
+    line: "IncludeOptional conf-enabled/*.conf"
+    state: present
+  notify: reload apache  
+  when: confd.stat.isdir is defined and confd.stat.isdir == true    
 
 - name: Enable Apache modules
   sudo: yes
