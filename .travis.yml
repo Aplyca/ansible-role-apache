@@ -17,7 +17,6 @@ install:
 
 script:
   - "cd tests"
-  - "apachectl -v"
   # Check the role/playbook's syntax.
   - "ansible-playbook $PLAYBOOK --syntax-check"
 
@@ -32,4 +31,5 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Request a page via Apache, to make sure Apache is running and responds.
+  - "apachectl -v"
   - "curl http://localhost/"
