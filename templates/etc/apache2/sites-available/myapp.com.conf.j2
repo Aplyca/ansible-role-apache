@@ -1,0 +1,21 @@
+ # {{ ansible_managed }}
+
+<VirtualHost *:{{ item.value['port']|default('80') }}>
+    DocumentRoot {{ item.value['DocumentRoot']|default('/var/www/html') }}
+
+    ServerName {{ item.value['ServerName']|default('myapp.com') }}
+    {% for serveralias in item.value['ServerAlias'] %}
+    ServerAlias {{ serveralias }}
+    {% endfor %}
+
+    {% if item.value['ErrorLog'] is defined %}
+    ErrorLog {{ item.value['ErrorLog'] }}
+    {% endif %}
+    {% if item.value['CustomLog'] is defined %}
+    CustomLog {{ item.value['CustomLog'] }} combined
+    {% endif %}
+    {% if item.value['IncludeOptional'] is defined %}
+
+    {% if confd.stat.isdir is defined and confd.stat.isdir == true %}Include{% else %}IncludeOptional{% endif %} "{{ item.value['IncludeOptional'] }}"
+    {% endif %}
+</VirtualHost>
