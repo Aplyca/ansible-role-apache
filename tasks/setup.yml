@@ -17,11 +17,13 @@
     - conf-available
     - conf-enabled
 
-- name: Make sure the override conf is present
+- name: Make sure the override confs are present
   sudo: yes
   template:
-    src: etc/apache2/conf-available/override.conf.j2
-    dest: "{{ apache['server_root'] }}/{{ apache['conf_available_path'] }}/override.conf"
+    src: etc/apache2/conf-available/{{ item.value }}.conf.j2
+    dest: "{{ apache['server_root'] }}/{{ apache['conf_available_path'] }}/{{ item.value }}.conf"
+  with_dict: apache["extra_conf"]    
+  notify: reload apache
   
 - name: Configure MPM prefork
   sudo: yes

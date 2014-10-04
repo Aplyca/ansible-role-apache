@@ -18,6 +18,7 @@ install:
 script:
   - "cd tests"
   - "apachectl -v"
+  - "apachectl -t"
   # Check the role/playbook's syntax.
   - "ansible-playbook $PLAYBOOK --syntax-check"
 

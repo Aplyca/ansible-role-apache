@@ -9,4 +9,12 @@ apache:
   disable_modules:
     - autoindex
   extra_conf:
-    z10: override.conf
+    z10: override
+  virtualhosts:
+    myapp.com: 
+      port: 80 
+      DocumentRoot: /var/www/html
+      ServerName: myapp.com
+      ServerAlias: 
+        - www.myapp.com      
+      IncludeOptional: /var/www/html/*.conf

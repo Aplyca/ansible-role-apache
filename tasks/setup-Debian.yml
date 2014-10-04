@@ -12,9 +12,10 @@
     path: /etc/apache2/conf.d
   register: confd
 
-- name: Enable override configuration
+- name: Enable override configurations
   sudo: yes
-  command: a2enconf override
+  command: a2enconf {{ item.value }}
+  with_dict: apache["extra_conf"]
   notify: reload apache
   when: confd.stat.isdir is defined and confd.stat.isdir == false
 

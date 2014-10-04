@@ -8,6 +8,7 @@ KeepAliveTimeout {{ apache["KeepAliveTimeout"] | default("5") }}
 LogLevel {{ apache["LogLevel"] | default("warn") }}
 
 # Security
+ServerName {{ apache["ServerName"] | default("server") }}
 ServerTokens {{ apache["ServerTokens"] | default("OS") }}
 ServerSignature {{ apache["ServerSignature"] | default("On") }}
 TraceEnable {{ apache["TraceEnable"] | default("Off") }}
