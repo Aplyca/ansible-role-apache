@@ -17,8 +17,6 @@ install:
 
 script:
   - "cd tests"
-  - "apachectl -v"
-  - "apachectl -t"
   # Check the role/playbook's syntax.
   - "ansible-playbook $PLAYBOOK --syntax-check"
 
@@ -34,4 +32,6 @@ script:
 
   # Request a page via Apache, to make sure Apache is running and responds.
   - "apachectl -v"
+  - "apachectl -t"
+  - "apachectl -S"  
   - "curl http://localhost/"

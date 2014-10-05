@@ -11,10 +11,5 @@ apache:
   extra_conf:
     z10: override
   virtualhosts:
-    myapp.com: 
-      port: 80 
-      DocumentRoot: /var/www/html
+    myapp.com:
       ServerName: myapp.com
-      ServerAlias: 
-        - www.myapp.com      
-      IncludeOptional: /var/www/html/*.conf
