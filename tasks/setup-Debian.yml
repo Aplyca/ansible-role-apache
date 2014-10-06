@@ -5,12 +5,12 @@
     name: apache2
     state: present
 
-- include: setup.yml
-
 - name: Check if conf available directory exists
   stat:
     path: /etc/apache2/conf.d
   register: confd
+
+- include: setup.yml
 
 - name: Enable override configurations
   sudo: yes
@@ -27,6 +27,13 @@
     state: present
   notify: reload apache  
   when: confd.stat.isdir is defined and confd.stat.isdir == true    
+
+- name: Enable virtualhosts
+  sudo: yes
+  command: a2ensite {{ item.ServerName }}
+  with_items: apache["virtualhosts"]
+  notify: reload apache
+  when: item.ServerName is defined and confd.stat.isdir is defined and confd.stat.isdir == false
 
 - name: Enable Apache modules
   sudo: yes

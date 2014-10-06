@@ -11,5 +11,5 @@ apache:
   extra_conf:
     z10: override
   virtualhosts:
-    myapp.com:
+    - 
       ServerName: myapp.com

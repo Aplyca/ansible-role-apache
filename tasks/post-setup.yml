@@ -9,22 +9,14 @@
   with_dict: apache["extra_conf"]
   notify: reload apache    
   when: apache["extra_conf"] is defined
-    
-- name: Make sure the available virtualhosts are present
-  sudo: yes
-  template:
-    src: "etc/apache2/sites-available/myapp.com.conf.j2"
-    dest: "{{ apache['server_root'] }}/{{ apache['sites_available_path'] }}/{{ item.key }}.conf"
-  with_dict: apache["virtualhosts"]  
-  when: apache["virtualhosts"] is defined  
 
 - name: Make sure the enabled virtualhosts are present
   sudo: yes
   file:
-    src: "../{{ apache['sites_available_path'] }}/{{ item.key }}.conf"
-    path: "{{ apache['server_root'] }}/{{ apache['sites_enabled_path'] }}/{{ item.key }}.conf"
+    src: "../{{ apache['sites_available_path'] }}/{{ item.ServerName }}.conf"
+    path: "{{ apache['server_root'] }}/{{ apache['sites_enabled_path'] }}/{{ item.ServerName }}.conf"
     state: link
     force: yes
-  with_dict: apache["virtualhosts"]  
+  with_items: apache["virtualhosts"]  
   notify: reload apache  
   when: apache["virtualhosts"] is defined 

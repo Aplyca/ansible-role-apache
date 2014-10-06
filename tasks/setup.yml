@@ -31,3 +31,11 @@
     src: etc/apache2/mods-available/mpm_prefork.conf.j2
     dest: "{{ apache['server_root'] }}/{{ apache['mods_available_path'] }}/mpm_prefork.conf"
   notify: reload apache  
+  
+- name: Make sure the available virtualhosts are present
+  sudo: yes
+  template:
+    src: "etc/apache2/sites-available/myapp.com.conf.j2"
+    dest: "{{ apache['server_root'] }}/{{ apache['sites_available_path'] }}/{{ item.ServerName }}.conf"
+  with_items: apache["virtualhosts"]  
+  when: item.ServerName is defined

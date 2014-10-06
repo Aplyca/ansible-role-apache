@@ -1,25 +1,25 @@
  # {{ ansible_managed }}
 
-<VirtualHost *:{{ item.value['port']|default('80') }}>
-	{% if item.value['DocumentRoot'] is defined %}
-    DocumentRoot {{ item.value['DocumentRoot']|default('/var/www/html') }}
+<VirtualHost *:{{ item['port']|default('80') }}>
+	{% if item['DocumentRoot'] is defined %}
+    DocumentRoot {{ item['DocumentRoot']|default('/var/www/html') }}
 	{% endif %}
 
-    ServerName {{ item.value['ServerName']|default('myapp.com') }}
-	{% if item.value['ServerAlias'] is defined %}
-    {% for serveralias in item.value['ServerAlias'] %}
+    ServerName {{ item['ServerName']|default('myapp.com') }}
+	{% if item['ServerAlias'] is defined %}
+    {% for serveralias in item['ServerAlias'] %}
     ServerAlias {{ serveralias }}
     {% endfor %}
 	{% endif %}
 
-    {% if item.value['ErrorLog'] is defined %}
-    ErrorLog {{ item.value['ErrorLog'] }}
+    {% if item['ErrorLog'] is defined %}
+    ErrorLog {{ item['ErrorLog'] }}
     {% endif %}
-    {% if item.value['CustomLog'] is defined %}
-    CustomLog {{ item.value['CustomLog'] }} combined
+    {% if item['CustomLog'] is defined %}
+    CustomLog {{ item['CustomLog'] }} combined
     {% endif %}
-    {% if item.value['IncludeOptional'] is defined %}
+    {% if item['IncludeOptional'] is defined %}
 
-    {% if confd.stat is defined and confd.stat.isdir is defined and confd.stat.isdir == true %}Include{% else %}IncludeOptional{% endif %} "{{ item.value['IncludeOptional'] }}"
+    {% if confd.stat is defined and confd.stat.isdir is defined and confd.stat.isdir == true %}Include{% else %}IncludeOptional{% endif %} "{{ item['IncludeOptional'] }}"
     {% endif %}
 </VirtualHost>
