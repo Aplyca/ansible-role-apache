@@ -1,4 +1,4 @@
 ---
-- hosts: ansible-role-apache.vagrant
+- hosts: all
   roles:
     - ansible-role-apache

@@ -1,8 +1,8 @@
 Vagrant.configure(2) do |config|
-  config.vm.define "ansible-role-apache.vagrant", primary: true, autostart: true do |config_machine|
+  config.vm.define "apache.vagrant", primary: true, autostart: true do |config_machine|
       #Assigning a provider
       config_machine.vm.provider :virtualbox do |virtualbox, override|
-          virtualbox.name = "Testing Ansible Apache role"
+          virtualbox.name = "Vgrant Apache"
 		  #override.vm.box = "chef/centos-7.0"
 		  override.vm.box = "ubuntu/trusty64"
           
