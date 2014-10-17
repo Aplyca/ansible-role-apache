@@ -8,6 +8,7 @@ env:
 before_install:
   - uname -a
   - sudo apt-get update -qq
+  - ln -s ansible-role-lamp ../mauricios.Apache
 
 install:
   - sudo apt-get install -y curl
