@@ -6,19 +6,26 @@ Ansible Role that installs an configure Apache 2.x on Debian/Ubuntu.
 
 ## Requirements
 
-configured ansible.cfg
+Use hash behavior for variables in ansible.cfg
+See example: https://github.com/Aplyca/ansible-role-lamp/blob/master/tests/ansible.cfg
+See official docs: http://docs.ansible.com/intro_configuration.html#hash-behaviour
 
 ## Role Variables
 
-TODO: add variables documentation
+See default variables: https://github.com/Aplyca/ansible-role-lamp/blob/master/defaults/main.yml
 
 ## Dependencies
 
 None.
 
-## Example Playbook
+Use Vagrant to test the role:
 
-TODO:Add example playbook
+```bash
+cd tests
+vagrant box add ubuntu/trusty64
+vagrant up
+```
+You should see an Apache server on http://localhost:8080
 
 ## License
 
