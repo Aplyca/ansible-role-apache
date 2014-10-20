@@ -21,9 +21,9 @@ None.
 Use Vagrant to test the role:
 
 ```bash
-cd tests
-vagrant box add ubuntu/trusty64
-vagrant up
+cd tests;
+vagrant box add ubuntu/trusty64;
+vagrant up;
 ```
 You should see an Apache server on http://localhost:8080
 
