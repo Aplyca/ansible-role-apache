@@ -10,6 +10,20 @@ Use hash behavior for variables in ansible.cfg
 See example: https://github.com/Aplyca/ansible-role-lamp/blob/master/tests/ansible.cfg
 See official docs: http://docs.ansible.com/intro_configuration.html#hash-behaviour
 
+## Installation
+
+Using ansible galaxy:
+
+```bash
+ansible-galaxy install mauricios.Apache
+```
+You can add this role as a dependency forother roles, add the role to the meta/main.yml file of your own role:
+
+```yaml
+dependencies:
+  - { role: mauricios.Apache }
+```
+
 ## Role Variables
 
 See default variables: https://github.com/Aplyca/ansible-role-lamp/blob/master/defaults/main.yml
@@ -17,6 +31,8 @@ See default variables: https://github.com/Aplyca/ansible-role-lamp/blob/master/d
 ## Dependencies
 
 None.
+
+## Testing
 
 Use Vagrant to test the role:
 
