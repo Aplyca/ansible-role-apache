@@ -17,7 +17,7 @@ Using ansible galaxy:
 ```bash
 ansible-galaxy install mauricios.Apache
 ```
-You can add this role as a dependency forother roles, add the role to the meta/main.yml file of your own role:
+You can add this role as a dependency for other roles, add the role to the meta/main.yml file of your own role:
 
 ```yaml
 dependencies:
