@@ -7,18 +7,16 @@ Ansible Role that installs an configure Apache 2.x on Debian/Ubuntu.
 ## Requirements
 
 Use hash behavior for variables in ansible.cfg
-See example: https://github.com/Aplyca/ansible-role-lamp/blob/master/tests/ansible.cfg
+See example: https://github.com/Aplyca/ansible-role-apache/blob/master/tests/ansible.cfg
 See official docs: http://docs.ansible.com/intro_configuration.html#hash-behaviour
 
 ## Installation
 
 Using ansible galaxy:
-
 ```bash
 ansible-galaxy install mauricios.Apache
 ```
-You can add this role as a dependency forother roles, add the role to the meta/main.yml file of your own role:
-
+You can add this role as a dependency for other roles, add the role to the meta/main.yml file of your own role:
 ```yaml
 dependencies:
   - { role: mauricios.Apache }
