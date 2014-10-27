@@ -5,11 +5,6 @@
     name: apache2
     state: present
 
-- name: Check if conf available directory exists
-  stat:
-    path: /etc/apache2/conf.d
-  register: confd
-
 - include: setup.yml
 
 - name: Enable override configurations

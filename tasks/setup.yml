@@ -1,4 +1,9 @@
 ---
+- name: Check if conf available directory exists
+  stat:
+    path: /etc/apache2/conf.d
+  register: confd
+
 - name: Configure ports of Apache
   sudo: yes
   template:
