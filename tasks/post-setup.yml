@@ -2,13 +2,11 @@
 - name: Make sure the enabled configuration are present
   sudo: yes
   file:
-    src: "../{{ apache['conf_available_path'] }}/{{ item.value }}.conf"
-    path: "{{ apache['server_root'] }}/{{ apache['conf_enabled_path'] }}/{{ item.key }}-{{ item.value }}.conf"
+    src: "../{{ apache['conf_available_path'] }}/override.conf"
+    path: "{{ apache['server_root'] }}/{{ apache['conf_enabled_path'] }}/z10-override.conf"
     state: link
     force: yes
-  with_dict: apache["extra_conf"]
-  notify: reload apache    
-  when: apache["extra_conf"] is defined
+  notify: reload apache
 
 - name: Make sure the enabled virtualhosts are present
   sudo: yes
@@ -19,4 +17,4 @@
     force: yes
   with_items: apache["virtualhosts"]  
   notify: reload apache  
-  when: apache["virtualhosts"] is defined 
+  when: apache["virtualhosts"] is defined

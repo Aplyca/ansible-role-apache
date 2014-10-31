@@ -8,8 +8,6 @@ apache:
     - rewrite
   disable_modules:
     - autoindex
-  extra_conf:
-    z10: override
   virtualhosts:
     - 
       ServerName: myapp.com

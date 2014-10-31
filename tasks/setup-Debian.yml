@@ -9,8 +9,7 @@
 
 - name: Enable override configurations
   sudo: yes
-  command: a2enconf {{ item.value }}
-  with_dict: apache["extra_conf"]
+  command: a2enconf override
   notify: reload apache
   when: confd.stat.isdir is defined and confd.stat.isdir == false
 
