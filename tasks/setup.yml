@@ -34,9 +34,7 @@
   template:
     src: etc/apache2/mods-available/mpm_prefork.conf.j2
     dest: "{{ apache['server_root'] }}/{{ apache['mods_available_path'] }}/mpm_prefork.conf"
-  notify: reload apache  
-  
-- debug: var=apache
+  notify: reload apache
 
 - name: Make sure the available virtualhosts are present
   sudo: yes
