@@ -36,3 +36,6 @@ script:
   - "apachectl -t"
   - "apachectl -S"  
   - "curl http://localhost/"
+
+notification:
+  email: false
