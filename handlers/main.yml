@@ -1,4 +1,11 @@
 ---
+- name: reload apache
+  sudo: yes
+  service:
+    name: "{{ apache['service'] }}"
+    state: reloaded
+    enabled: yes
+
 - name: restart apache
   sudo: yes
   service:
@@ -6,9 +13,3 @@
     state: restarted
     enabled: yes
 
-- name: reload apache
-  sudo: yes
-  service:
-    name: "{{ apache['service'] }}"
-    state: reloaded
-    enabled: yes

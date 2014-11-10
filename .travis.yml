@@ -2,6 +2,13 @@
 language: python
 python: "2.7"
 
+addons:
+  hosts:
+    - myapp.com
+
+notification:
+  email: false
+
 env:
   - PLAYBOOK=playbook.yml
 
@@ -35,7 +42,4 @@ script:
   - "apachectl -v"
   - "apachectl -t"
   - "apachectl -S"  
-  - "curl http://localhost/"
-
-notification:
-  email: false
+  - "curl http://myapp.com/"
