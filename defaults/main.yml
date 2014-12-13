@@ -6,6 +6,7 @@ apache:
   ServerSignature: "Off"
   enable_modules:
     - rewrite
+    - expires
   disable_modules:
     - autoindex
   virtualhosts:
