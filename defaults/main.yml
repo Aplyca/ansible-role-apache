@@ -11,3 +11,4 @@ apache:
     - autoindex
   virtualhosts:
     - ServerName: myapp.com
+  virtualhosts: []
