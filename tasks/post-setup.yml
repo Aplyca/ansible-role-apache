@@ -18,3 +18,14 @@
   with_items: apache["virtualhosts"]  
   notify: reload apache  
   when: apache["virtualhosts"] is defined
+
+- name: Make sure the enabled SSL virtualhosts are present
+  sudo: yes
+  file:
+    src: "../{{ apache['sites_available_path'] }}/{{ item.ServerName }}-ssl.conf"
+    path: "{{ apache['server_root'] }}/{{ apache['sites_enabled_path'] }}/{{ item.ServerName }}-ssl.conf"
+    state: link
+    force: yes
+  with_items: apache["virtualhosts_ssl"]
+  notify: reload apache
+  when: apache["virtualhosts_ssl"] is defined

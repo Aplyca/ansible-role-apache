@@ -12,3 +12,9 @@ ServerName {{ apache["ServerName"] | default("server") }}
 ServerTokens {{ apache["ServerTokens"] | default("OS") }}
 ServerSignature {{ apache["ServerSignature"] | default("On") }}
 TraceEnable {{ apache["TraceEnable"] | default("Off") }}
+
+<IfModule mod_ssl.c>
+    SSLCipherSuite {{ apache["SSLCipherSuite"] | default("HIGH:MEDIUM:!aNULL:!MD5") }}
+    SSLHonorCipherOrder {{ apache["SSLHonorCipherOrder"] | default("on") }}
+    SSLProtocol {{ apache["SSLProtocol"] | default("all") }}
+</IfModule>

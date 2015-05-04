@@ -10,5 +10,4 @@ apache:
   disable_modules:
     - autoindex
   virtualhosts:
-    - 
-      ServerName: myapp.com
+    - ServerName: myapp.com

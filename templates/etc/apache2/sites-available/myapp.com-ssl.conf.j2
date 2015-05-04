@@ -1,0 +1,37 @@
+ # {{ ansible_managed }}
+
+<VirtualHost *:{{ item['port']|default('443') }}>
+	{% if item['DocumentRoot'] is defined %}
+    DocumentRoot {{ item['DocumentRoot']|default('/var/www/html') }}
+	{% endif %}
+
+    ServerName {{ item['ServerName']|default('myapp.com') }}
+	{% if item['ServerAlias'] is defined %}
+    {% for serveralias in item['ServerAlias'] %}
+    ServerAlias {{ serveralias }}
+    {% endfor %}
+	{% endif %}
+
+    SSLEngine on
+    {% if item['SSLCertificateFile'] is defined %}
+        SSLCertificateFile {{ item['SSLCertificateFile'] }}
+    {% endif %}
+    {% if item['SSLCertificateKeyFile'] is defined %}
+        SSLCertificateKeyFile {{ item['SSLCertificateKeyFile'] }}
+    {% endif %}
+    {% if item['SSLCertificateChainFile'] is defined %}
+        SSLCertificateChainFile {{ item['SSLCertificateChainFile'] }}
+    {% endif %}
+
+    {% if item['ErrorLog'] is defined %}
+    ErrorLog {{ item['ErrorLog'] }}
+    {% endif %}
+    {% if item['CustomLog'] is defined %}
+    CustomLog {{ item['CustomLog'] }} combined
+    {% endif %}
+    {% if item['IncludeOptional'] is defined %}
+        {% for include in item['IncludeOptional'] %}
+            {% if confd.stat is defined and confd.stat.isdir is defined and confd.stat.isdir == true %}Include{% else %}IncludeOptional{% endif %} "{{ include }}"
+        {% endfor %}
+    {% endif %}
+</VirtualHost>

@@ -29,6 +29,13 @@
   notify: reload apache
   when: item.ServerName is defined and confd.stat.isdir is defined and confd.stat.isdir == false
 
+- name: Enable SSL virtualhosts
+  sudo: yes
+  command: "a2ensite {{ item.ServerName }}-ssl"
+  with_items: apache["virtualhosts_ssl"]
+  notify: reload apache
+  when: item.ServerName is defined and confd.stat.isdir is defined and confd.stat.isdir == false
+
 - name: Enable Apache modules
   sudo: yes
   apache2_module:

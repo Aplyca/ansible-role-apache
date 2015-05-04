@@ -44,3 +44,12 @@
   with_items: apache["virtualhosts"]
   notify: reload apache
   when: item.ServerName is defined
+
+- name: Make sure the available SSL virtualhosts are present
+  sudo: yes
+  template:
+    src: "etc/apache2/sites-available/myapp.com-ssl.conf.j2"
+    dest: "{{ apache['server_root'] }}/{{ apache['sites_available_path'] }}/{{ item.ServerName }}-ssl.conf"
+  with_items: apache["virtualhosts_ssl"]
+  notify: reload apache
+  when: item.ServerName is defined
