@@ -17,7 +17,7 @@ machine:
 
 test:
   pre:
-    - sudo ln -s ansible-role-apache ../../mauricios.Apache
+    - sudo ln -s ansible-role-apache ../../aplyca.Apache
     - ansible --version
   override:
     - ansible-playbook $PLAYBOOK --syntax-check

@@ -2,7 +2,7 @@
 dependencies: []
 
 galaxy_info:
-  author: mauricios
+  author: aplyca
   description: Apache 2.x for Debian/Ubuntu.
   company: "Aplyca SAS"
   license: "license (BSD, MIT)"
