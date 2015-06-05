@@ -12,3 +12,4 @@ apache:
   virtualhosts:
     - ServerName: myapp.com
   virtualhosts_ssl: []
+  certificates: []

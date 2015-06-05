@@ -53,3 +53,38 @@
   with_items: apache["virtualhosts_ssl"]
   notify: reload apache
   when: item.ServerName is defined
+
+- name: Make sure the SSL certificates directories are present
+  sudo: yes
+  file:
+    dest: "/etc/ssl/{{ item.name }}"
+    state: directory
+  with_items: apache["certificates"]
+  when: item.name is defined
+
+- name: Make sure the SSL certificates are present
+  sudo: yes
+  copy:
+    content: "{{ item.crt }}"
+    dest: "/etc/ssl/{{ item.name }}/certificate.crt"
+  with_items: apache["certificates"]
+  notify: reload apache
+  when: item.name is defined and item.crt is defined
+
+- name: Make sure the SSL certificates key are present
+  sudo: yes
+  copy:
+    content: "{{ item.key }}"
+    dest: "/etc/ssl/{{ item.name }}/certificate.key"
+  with_items: apache["certificates"]
+  notify: reload apache
+  when: item.name is defined and item.key is defined
+
+- name: Make sure the SSL certificates intermediate are present
+  sudo: yes
+  copy:
+    content: "{{ item.intermediate }}"
+    dest: "/etc/ssl/{{ item.name }}/intermediate.crt"
+  with_items: apache["certificates"]
+  notify: reload apache
+  when: item.name is defined and item.intermediate is defined
