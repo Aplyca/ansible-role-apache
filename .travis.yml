@@ -26,14 +26,14 @@ install:
 script:
   - "cd tests"
   # Check the role/playbook's syntax.
-  - "ansible-playbook $PLAYBOOK --syntax-check"
+  - "ansible-playbook $PLAYBOOK --syntax-check --vault-password-file password_vault.txt"
 
   # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook $PLAYBOOK --connection=local"
+  - "ansible-playbook $PLAYBOOK --connection=local --vault-password-file password_vault.txt"
 
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
-    ansible-playbook $PLAYBOOK --connection=local
+    ansible-playbook $PLAYBOOK --connection=local --vault-password-file password_vault.txt
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)

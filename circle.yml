@@ -20,9 +20,9 @@ test:
     - sudo ln -s ansible-role-apache ../../aplyca.Apache
     - ansible --version
   override:
-    - ansible-playbook $PLAYBOOK --syntax-check
-    - ansible-playbook $PLAYBOOK --connection=local
-    - "ansible-playbook $PLAYBOOK --connection=local | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)"
+    - ansible-playbook $PLAYBOOK --syntax-check --vault-password-file password_vault.txt
+    - ansible-playbook $PLAYBOOK --connection=local --vault-password-file password_vault.txt
+    - "ansible-playbook $PLAYBOOK --connection=local --vault-password-file password_vault.txt | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)"
     - "apachectl -v"
     - "apachectl -t"
     - "apachectl -S"
