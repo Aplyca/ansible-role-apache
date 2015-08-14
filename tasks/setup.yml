@@ -71,7 +71,7 @@
   notify: reload apache
   when: item.name is defined and item.crt is defined
 
-- name: Make sure the SSL certificates key are present
+- name: Make sure the SSL certificate keys are present
   sudo: yes
   copy:
     content: "{{ item.key }}"
@@ -80,7 +80,7 @@
   notify: reload apache
   when: item.name is defined and item.key is defined
 
-- name: Make sure the SSL certificates intermediate are present
+- name: Make sure the SSL certificate intermediates are present
   sudo: yes
   copy:
     content: "{{ item.intermediate }}"
