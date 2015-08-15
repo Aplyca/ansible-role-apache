@@ -28,7 +28,7 @@
     src: etc/apache2/conf-available/override.conf.j2
     dest: "{{ apache['server_root'] }}/{{ apache['conf_available_path'] }}/override.conf"
   notify: reload apache
-  
+
 - name: Configure MPM prefork
   sudo: yes
   template:
@@ -61,6 +61,7 @@
     state: directory
   with_items: apache["certificates"]
   when: item.name is defined
+  no_log: True
 
 - name: Make sure the SSL certificates are present
   sudo: yes
@@ -70,6 +71,7 @@
   with_items: apache["certificates"]
   notify: reload apache
   when: item.name is defined and item.crt is defined
+  no_log: True
 
 - name: Make sure the SSL certificate keys are present
   sudo: yes
@@ -79,6 +81,7 @@
   with_items: apache["certificates"]
   notify: reload apache
   when: item.name is defined and item.key is defined
+  no_log: True
 
 - name: Make sure the SSL certificate intermediates are present
   sudo: yes
@@ -88,3 +91,4 @@
   with_items: apache["certificates"]
   notify: reload apache
   when: item.name is defined and item.intermediate is defined
+  no_log: True
