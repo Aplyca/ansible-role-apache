@@ -1,7 +1,6 @@
 ---
 - hosts: all
-  vars_files:
-    - certificates.yml
-  roles:
-    - aplyca.Apache
-
+  tasks:
+    - name: Test if Apache is installed and running
+      uri:
+        url: "http://myapp.com"  

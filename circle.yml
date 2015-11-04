@@ -1,29 +1,13 @@
-general:
-  build_dir: tests
-
 dependencies:
   pre:
-    - sudo pip install paramiko PyYAML jinja2 httplib2
-    - sudo pip install ansible
+    - sudo pip install -r build/requirements.txt
 
 machine:
-  environment:
-    PLAYBOOK: playbook.yml
-  pre:
-    - uname -a
-    - cat /proc/version
   hosts:
     myapp.com: 127.0.0.1
 
 test:
   pre:
-    - sudo ln -s ansible-role-apache ../../aplyca.Apache
-    - ansible --version
+    - sudo ln -s ansible-role-aws ../aplyca.Apache
   override:
-    - ansible-playbook $PLAYBOOK --syntax-check --vault-password-file password_vault.txt
-    - ansible-playbook $PLAYBOOK --connection=local --vault-password-file password_vault.txt
-    - "ansible-playbook $PLAYBOOK --connection=local --vault-password-file password_vault.txt | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)"
-    - "apachectl -v"
-    - "apachectl -t"
-    - "apachectl -S"
-    - "curl http://myapp.com/"
+    - tests/tests.sh

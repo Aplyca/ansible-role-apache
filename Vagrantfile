@@ -13,9 +13,9 @@ Vagrant.configure(2) do |config|
 	  
       # Asinging a provisioner
       config_machine.vm.provision :ansible, run: "always" do |provisioner|
-        provisioner.playbook = "playbook.yml"
-        provisioner.extra_vars = "custom_vars.yml" if File.file?("custom_vars.yml")
-        provisioner.vault_password_file = "password_vault.txt" if File.file?("password_vault.txt")
+        provisioner.playbook = "build/playbook.yml"
+        provisioner.extra_vars = "build/settings.yml" if File.file?("settings.yml")
+        provisioner.vault_password_file = ".vault.txt" if File.file?(".vault.txt")
       end
   end
 end
