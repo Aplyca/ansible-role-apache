@@ -4,7 +4,7 @@ python: "2.7"
 
 before_install:
   - sudo apt-get update -qq
-  - ln -s ansible-role-aws ../aplyca.Apache
+  - ln -s ansible-role-apache ../aplyca.Apache
 
 install:
   # Install Ansible.
