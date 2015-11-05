@@ -1,6 +1,6 @@
 ---
 - name: Make sure the enabled configuration are present
-  sudo: yes
+  become: yes
   file:
     src: "../{{ apache['conf_available_path'] }}/override.conf"
     path: "{{ apache['server_root'] }}/{{ apache['conf_enabled_path'] }}/z10-override.conf"
@@ -9,7 +9,7 @@
   notify: reload apache
 
 - name: Make sure the enabled virtualhosts are present
-  sudo: yes
+  become: yes
   file:
     src: "../{{ apache['sites_available_path'] }}/{{ item.ServerName }}.conf"
     path: "{{ apache['server_root'] }}/{{ apache['sites_enabled_path'] }}/{{ item.ServerName }}.conf"
@@ -20,7 +20,7 @@
   when: apache["virtualhosts"] is defined
 
 - name: Make sure the enabled SSL virtualhosts are present
-  sudo: yes
+  become: yes
   file:
     src: "../{{ apache['sites_available_path'] }}/{{ item.ServerName }}-ssl.conf"
     path: "{{ apache['server_root'] }}/{{ apache['sites_enabled_path'] }}/{{ item.ServerName }}-ssl.conf"

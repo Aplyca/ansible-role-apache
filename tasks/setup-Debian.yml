@@ -1,20 +1,22 @@
 ---
 - name: Ensure Apache is present using apt
-  sudo: yes
+  become: yes
   apt: 
     name: apache2
     state: present
+    update_cache: yes
+    cache_valid_time: 86400
 
 - include: setup.yml
 
 - name: Enable override configurations
-  sudo: yes
+  become: yes
   command: a2enconf override
   notify: reload apache
   when: confd.stat.isdir is defined and confd.stat.isdir == false
 
 - name: Enable override configuration for previous Debian releases
-  sudo: yes
+  become: yes
   lineinfile:
     dest: "{{ apache['server_root'] }}/{{ apache['service'] }}.conf"
     line: "Include conf-enabled/*.conf"
@@ -23,21 +25,21 @@
   when: confd.stat.isdir is defined and confd.stat.isdir == true    
 
 - name: Enable virtualhosts
-  sudo: yes
+  become: yes
   command: a2ensite {{ item.ServerName }}
   with_items: apache["virtualhosts"]
   notify: reload apache
   when: item.ServerName is defined and confd.stat.isdir is defined and confd.stat.isdir == false
 
 - name: Enable SSL virtualhosts
-  sudo: yes
+  become: yes
   command: "a2ensite {{ item.ServerName }}-ssl"
   with_items: apache["virtualhosts_ssl"]
   notify: reload apache
   when: item.ServerName is defined and confd.stat.isdir is defined and confd.stat.isdir == false
 
 - name: Enable Apache modules
-  sudo: yes
+  become: yes
   apache2_module:
     name: "{{ item }}"
     state: present
@@ -46,7 +48,7 @@
   when: apache["enable_modules"]
 
 - name: Disable Apache modules
-  sudo: yes
+  become: yes
   apache2_module:
     name: "{{ item }}"
     state: absent
