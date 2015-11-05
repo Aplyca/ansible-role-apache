@@ -1,51 +1,63 @@
-# Ansible Role: Apache 2.x
+Ansible Role: Apache 2.x
+==========================
 
 [![Build Status](https://travis-ci.org/Aplyca/ansible-role-apache.svg?branch=master)](https://travis-ci.org/Aplyca/ansible-role-apache)
 [![Circle CI](https://circleci.com/gh/Aplyca/ansible-role-apache.png?style=badge)](https://circleci.com/gh/Aplyca/ansible-role-apache)
 
 Ansible Role that installs an configure Apache 2.x on Debian/Ubuntu.
 
-## Requirements
+Requirements
+------------
 
 Use hash behavior for variables in ansible.cfg
 See example: https://github.com/Aplyca/ansible-role-apache/blob/master/tests/ansible.cfg
 See official docs: http://docs.ansible.com/intro_configuration.html#hash-behaviour
 
-## Installation
+Installation
+------------
 
 Using ansible galaxy:
 ```bash
-ansible-galaxy install mauricios.Apache
+ansible-galaxy install aplyca.Apache
 ```
 You can add this role as a dependency for other roles, add the role to the meta/main.yml file of your own role:
 ```yaml
 dependencies:
-  - { role: mauricios.Apache }
+  - { role: aplyca.Apache }
 ```
 
-## Role Variables
+Role Variables
+--------------
 
 See default variables: https://github.com/Aplyca/ansible-role-lamp/blob/master/defaults/main.yml
 
-## Dependencies
+Dependencies
+------------
 
 None.
 
-## Testing
-
-Use Vagrant to test the role:
+Testing
+-------
+Using Vagrant:
 
 ```bash
-cd tests;
-vagrant box add ubuntu/trusty64;
-vagrant up;
+tests/vagrant.sh
+```
+Using Docker:
+
+```bash
+tests/docker.sh
+```
+nt up;
 ```
 You should see an Apache server on http://localhost:8080
 
-## License
+License
+-------
 
 MIT / BSD
 
-## Author Information
+Author Information
+------------------
 
 Mauricio Sánchez from Aplyca SAS (http://www.aplyca.com)
