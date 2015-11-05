@@ -29,7 +29,7 @@ dependencies:
 Role Variables
 --------------
 
-See default variables: https://github.com/Aplyca/ansible-role-lamp/blob/master/defaults/main.yml
+See default variables: https://github.com/Aplyca/ansible-role-apache/blob/master/defaults/main.yml
 
 Dependencies
 ------------
@@ -48,8 +48,7 @@ Using Docker:
 ```bash
 tests/docker.sh
 ```
-nt up;
-```
+
 You should see an Apache server on http://localhost:8080
 
 License
