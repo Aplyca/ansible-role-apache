@@ -12,7 +12,7 @@
     {% endfor %}
 	{% endif %}
 
-    CustomLog {{ item['ErrorLog'] | default(apache['logs_dir'] ~ "/" ~ item['ServerName'] ~ "_access.log" ) }}
+    CustomLog {{ item['ErrorLog'] | default(apache['logs_dir'] ~ "/" ~ item['ServerName'] ~ "_access.log" ) }} combined
     ErrorLog {{ item['ErrorLog'] | default(apache['logs_dir'] ~ "/" ~ item['ServerName'] ~ "_error.log" ) }}
     
     {% if item['IncludeOptional'] is defined %}
