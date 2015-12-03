@@ -3,6 +3,7 @@
   stat:
     path: /etc/apache2/conf.d
   register: confd
+  tags: vhost
 
 - name: Configure ports of Apache
   become: yes
@@ -44,6 +45,7 @@
   with_items: apache["virtualhosts"]
   notify: reload apache
   when: item.ServerName is defined
+  tags: vhost
 
 - name: Make sure the available SSL virtualhosts are present
   become: yes
@@ -53,7 +55,8 @@
   with_items: apache["virtualhosts_ssl"]
   notify: reload apache
   when: item.ServerName is defined
-
+  tags: vhost
+  
 - name: Make sure the SSL certificates directories are present
   become: yes
   file:

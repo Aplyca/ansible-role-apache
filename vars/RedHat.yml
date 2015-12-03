@@ -4,5 +4,4 @@ apache:
   server_root: /etc/httpd
   mods_available_path: conf.modules.d
   user: apache
-
-apache_logs_dir: /var/log/httpd
+  logs_dir: /var/log/httpd

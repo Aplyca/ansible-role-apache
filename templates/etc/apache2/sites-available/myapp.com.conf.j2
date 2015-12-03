@@ -12,12 +12,9 @@
     {% endfor %}
 	{% endif %}
 
-    {% if item['ErrorLog'] is defined %}
-    ErrorLog {{ item['ErrorLog'] }}
-    {% endif %}
-    {% if item['CustomLog'] is defined %}
-    CustomLog {{ item['CustomLog'] }} combined
-    {% endif %}
+    CustomLog {{ item['ErrorLog'] | default(apache['logs_dir'] ~ "/" ~ item['ServerName'] ~ "_access.log" ) }}
+    ErrorLog {{ item['ErrorLog'] | default(apache['logs_dir'] ~ "/" ~ item['ServerName'] ~ "_error.log" ) }}
+    
     {% if item['IncludeOptional'] is defined %}
         {% for include in item['IncludeOptional'] %}
             {% if confd.stat is defined and confd.stat.isdir is defined and confd.stat.isdir == true %}Include{% else %}IncludeOptional{% endif %} "{{ include }}"
