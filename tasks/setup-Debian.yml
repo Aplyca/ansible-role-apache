@@ -1,7 +1,7 @@
 ---
 - name: Ensure Apache is present using apt
   become: yes
-  apt: 
+  apt:
     name: apache2
     state: present
     update_cache: yes
@@ -18,23 +18,23 @@
 - name: Enable override configuration for previous Debian releases
   become: yes
   lineinfile:
-    dest: "{{ apache['server_root'] }}/{{ apache['service'] }}.conf"
+    dest: "{{ apache.server_root }}/{{ apache.service }}.conf"
     line: "Include conf-enabled/*.conf"
     state: present
-  notify: reload apache  
-  when: confd.stat.isdir is defined and confd.stat.isdir == true    
+  notify: reload apache
+  when: confd.stat.isdir is defined and confd.stat.isdir == true
 
 - name: Enable virtualhosts
   become: yes
-  command: a2ensite {{ item.ServerName }}
-  with_items: apache["virtualhosts"]
+  command: "a2ensite {{ item.ServerName }}"
+  with_items: "{{ apache.virtualhosts }}"
   notify: reload apache
   when: item.ServerName is defined and confd.stat.isdir is defined and confd.stat.isdir == false
 
 - name: Enable SSL virtualhosts
   become: yes
   command: "a2ensite {{ item.ServerName }}-ssl"
-  with_items: apache["virtualhosts_ssl"]
+  with_items: "{{ apache.virtualhosts_ssl }}"
   notify: reload apache
   when: item.ServerName is defined and confd.stat.isdir is defined and confd.stat.isdir == false
 
@@ -43,15 +43,15 @@
   apache2_module:
     name: "{{ item }}"
     state: present
-  with_items: apache["enable_modules"]
+  with_items: "{{ apache.enable_modules }}"
   notify: reload apache
-  when: apache["enable_modules"]
+  when: "{{ apache.enable_modules }}"
 
 - name: Disable Apache modules
   become: yes
   apache2_module:
     name: "{{ item }}"
     state: absent
-  with_items: apache["disable_modules"]
+  with_items: "{{ apache.disable_modules }}"
   notify: reload apache
-  when: apache["disable_modules"]
+  when: "{{ apache.disable_modules }}"

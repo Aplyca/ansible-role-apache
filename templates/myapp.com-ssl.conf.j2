@@ -13,6 +13,10 @@
 	{% endif %}
 
     SSLEngine on
+    <Directory ./>
+        SSLRequireSSL
+    </Directory>
+
     {% if item['SSLCertificateFile'] is defined %}
         SSLCertificateFile {{ item['SSLCertificateFile'] }}
     {% endif %}
@@ -23,9 +27,9 @@
         SSLCertificateChainFile {{ item['SSLCertificateChainFile'] }}
     {% endif %}
 
-    CustomLog {{ item['ErrorLog'] | default(apache['logs_dir'] ~ "/" ~ item['ServerName'] ~ "_access.log" ) }} combined
-    ErrorLog {{ item['ErrorLog'] | default(apache['logs_dir'] ~ "/" ~ item['ServerName'] ~ "_error.log" ) }}
-    
+    CustomLog {{ item.ErrorLog | default(apache.logs_dir ~ "/" ~ item.ServerName ~ "_access.log" ) }} combined
+    ErrorLog {{ item.ErrorLog | default(apache.logs_dir ~ "/" ~ item.ServerName ~ "_error.log" ) }}
+
     {% if item['IncludeOptional'] is defined %}
         {% for include in item['IncludeOptional'] %}
             {% if confd.stat is defined and confd.stat.isdir is defined and confd.stat.isdir == true %}Include{% else %}IncludeOptional{% endif %} "{{ include }}"

@@ -2,8 +2,8 @@
 - name: Make sure the enabled configuration are present
   become: yes
   file:
-    src: "../{{ apache['conf_available_path'] }}/override.conf"
-    path: "{{ apache['server_root'] }}/{{ apache['conf_enabled_path'] }}/z10-override.conf"
+    src: "../{{ apache.conf_available_path }}/override.conf"
+    path: "{{ apache.server_root }}/{{ apache.conf_enabled_path }}/z10-override.conf"
     state: link
     force: yes
   notify: reload apache
@@ -11,21 +11,21 @@
 - name: Make sure the enabled virtualhosts are present
   become: yes
   file:
-    src: "../{{ apache['sites_available_path'] }}/{{ item.ServerName }}.conf"
-    path: "{{ apache['server_root'] }}/{{ apache['sites_enabled_path'] }}/{{ item.ServerName }}.conf"
+    src: "../{{ apache.sites_available_path }}/{{ item.ServerName }}.conf"
+    path: "{{ apache.server_root }}/{{ apache.sites_enabled_path }}/{{ item.ServerName }}.conf"
     state: link
     force: yes
-  with_items: apache["virtualhosts"]  
-  notify: reload apache  
-  when: apache["virtualhosts"] is defined
+  with_items: "{{ apache.virtualhosts }}"
+  notify: reload apache
+  when: apache.virtualhosts is defined
 
 - name: Make sure the enabled SSL virtualhosts are present
   become: yes
   file:
-    src: "../{{ apache['sites_available_path'] }}/{{ item.ServerName }}-ssl.conf"
-    path: "{{ apache['server_root'] }}/{{ apache['sites_enabled_path'] }}/{{ item.ServerName }}-ssl.conf"
+    src: "../{{ apache.sites_available_path }}/{{ item.ServerName }}-ssl.conf"
+    path: "{{ apache.server_root }}/{{ apache.sites_enabled_path }}/{{ item.ServerName }}-ssl.conf"
     state: link
     force: yes
-  with_items: apache["virtualhosts_ssl"]
+  with_items: "{{ apache.virtualhosts_ssl }}"
   notify: reload apache
-  when: apache["virtualhosts_ssl"] is defined
+  when: apache.virtualhosts_ssl is defined
