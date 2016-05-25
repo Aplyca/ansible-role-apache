@@ -1,0 +1,6 @@
+---
+apache:
+  virtualhosts:
+    - directives:
+        ServerName: myapp.com
+        ServerAlias: "*.myapp.com"

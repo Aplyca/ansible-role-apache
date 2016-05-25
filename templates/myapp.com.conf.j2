@@ -1,23 +1,27 @@
  # {{ ansible_managed }}
 
-<VirtualHost *:{{ item['port']|default('80') }}>
-	{% if item['DocumentRoot'] is defined %}
-    DocumentRoot {{ item['DocumentRoot']|default('/var/www/html') }}
-	{% endif %}
-
-    ServerName {{ item['ServerName']|default('myapp.com') }}
-	{% if item['ServerAlias'] is defined %}
-    {% for serveralias in item['ServerAlias'] %}
-    ServerAlias {{ serveralias }}
+<VirtualHost {{ item.listen | default('*:80') }}>
+    {% for directive, value in item.directives|dictsort(true) %}
+      {{ directive }} {{ value }};
     {% endfor %}
-	{% endif %}
 
-    CustomLog {{ item.ErrorLog | default(apache.logs_dir ~ "/" ~ item.ServerName ~ "_access.log" ) }} combined
-    ErrorLog {{ item.ErrorLog | default(apache.logs_dir ~ "/" ~ item.ServerName ~ "_error.log" ) }}
-
-    {% if item['IncludeOptional'] is defined %}
-        {% for include in item['IncludeOptional'] %}
-            {% if confd.stat is defined and confd.stat.isdir is defined and confd.stat.isdir == true %}Include{% else %}IncludeOptional{% endif %} "{{ include }}"
-        {% endfor %}
-    {% endif %}
+    CustomLog {{ apache.logs_dir ~ "/" ~ item.directives.ServerName ~ "_access.log" }} combined
+    ErrorLog {{ apache.logs_dir ~ "/" ~ item.directives.ServerName ~ "_error.log" }}
 </VirtualHost>
+
+{% if item.directives.SSLCertificateFile is defined and item.directives.SSLCertificateKeyFile is defined %}
+<VirtualHost *:443>
+    SSLEngine on
+    <Directory ./>
+        SSLRequireSSL
+    </Directory>
+
+    {% for directive, value in item.directives|dictsort(true) %}
+      {{ directive }} {{ value }};
+    {% endfor %}
+
+    CustomLog {{ apache.logs_dir ~ "/" ~ item.directives.ServerName ~ "_access.log" }} combined
+    ErrorLog {{ apache.logs_dir ~ "/" ~ item.directives.ServerName ~ "_error.log" }}
+
+</VirtualHost>
+{% endif %}

@@ -4,11 +4,11 @@ python: "2.7"
 
 before_install:
   - sudo apt-get update -qq
-  - ln -s ansible-role-apache ../aplyca.Apache
+  - ln -s ansible-role-apache ../Aplyca.Apache
 
 install:
   # Install Ansible.
-  - sudo pip install -r build/requirements.txt
+  - sudo pip install -r tests/requirements.txt
 
 script:
   - tests/tests.sh

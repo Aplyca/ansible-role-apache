@@ -41,18 +41,8 @@
   become: yes
   template:
     src: "myapp.com.conf.j2"
-    dest: "{{ apache.server_root }}/{{ apache.sites_available_path }}/{{ item.ServerName }}.conf"
+    dest: "{{ apache.server_root }}/{{ apache.sites_available_path }}/{{ item.directives.ServerName }}.conf"
   with_items: "{{ apache.virtualhosts }}"
   notify: reload apache
-  when: item.ServerName is defined
-  tags: vhost
-
-- name: Make sure the available SSL virtualhosts are present
-  become: yes
-  template:
-    src: "myapp.com-ssl.conf.j2"
-    dest: "{{ apache.server_root }}/{{ apache.sites_available_path }}/{{ item.ServerName }}-ssl.conf"
-  with_items: "{{ apache.virtualhosts_ssl }}"
-  notify: reload apache
-  when: item.ServerName is defined
+  when: item.directives.ServerName is defined
   tags: vhost

@@ -6,14 +6,12 @@ apache:
   ServerSignature: "Off"
   SSLProtocol: "all -SSLv2 -SSLv3"
   SSLHonorCipherOrder: "on"
-  SSLCipherSuite: "ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS"  
+  SSLCipherSuite: "ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS"
   enable_modules:
     - rewrite
     - expires
     - ssl
   disable_modules:
     - autoindex
-  virtualhosts:
-    - ServerName: myapp.com
-  virtualhosts_ssl: []
+  virtualhosts: []
   certificates: []

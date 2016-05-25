@@ -8,6 +8,6 @@ machine:
 
 test:
   pre:
-    - sudo ln -s ansible-role-apache ../aplyca.Apache
+    - sudo ln -s ansible-role-apache ../Aplyca.Apache
   override:
     - tests/tests.sh

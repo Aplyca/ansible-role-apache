@@ -1,0 +1,5 @@
+---
+- name: Provision Apache web server
+  hosts: all
+  roles:
+    - { role: Aplyca.Apache, tags: ["apache"] }
