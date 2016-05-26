@@ -3,4 +3,7 @@ apache:
   virtualhosts:
     - directives:
         ServerName: myapp.com
-        ServerAlias: "*.myapp.com"
+        ServerAlias:
+          - "*.myapp.com"
+          - "myapp.org"
+          - "*.myapp.org"

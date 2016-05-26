@@ -2,7 +2,13 @@
 
 <VirtualHost {{ item.listen | default('*:80') }}>
     {% for directive, value in item.directives|dictsort(true) %}
-      {{ directive }} {{ value }};
+        {% if value is string %}
+            {{ directive }} {{ value }}
+        {% elif value is iterable %}
+            {% for element in value %}
+                {{ directive }} {{ element }}
+            {% endfor %}
+        {% endif %}
     {% endfor %}
 
     CustomLog {{ apache.logs_dir ~ "/" ~ item.directives.ServerName ~ "_access.log" }} combined
@@ -17,7 +23,13 @@
     </Directory>
 
     {% for directive, value in item.directives|dictsort(true) %}
-      {{ directive }} {{ value }};
+        {% if value is string %}
+            {{ directive }} {{ value }}
+        {% elif value is iterable %}
+            {% for element in value %}
+                {{ directive }} {{ element }}
+            {% endfor %}
+        {% endif %}
     {% endfor %}
 
     CustomLog {{ apache.logs_dir ~ "/" ~ item.directives.ServerName ~ "_access.log" }} combined

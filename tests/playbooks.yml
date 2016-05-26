@@ -1,6 +1,8 @@
 ---
-- hosts: all
+- name: Test Apache provision
+  hosts: all
+  gather_facts: no
   tasks:
     - name: Test if Apache is installed and running
       uri:
-        url: "http://myapp.com"  
+        url: "http://localhost"
