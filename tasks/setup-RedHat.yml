@@ -1,29 +1,28 @@
 ---
 - name: Ensure Apache is present using yum
-  sudo: yes
-  yum: 
+  become: yes
+  yum:
     name: "{{ apache['service'] }}"
     state: present
 
 - include: setup.yml
 
 - name: Disable default ports configuration
-  sudo: yes
+  become: yes
   lineinfile:
     dest: "{{ apache['server_root'] }}/conf/{{ apache['service'] }}.conf"
     regexp: "^Listen "
     line: "IncludeOptional ports.conf"
     state: present
-    backrefs: yes 
-    
+    backrefs: yes
+
 - name: Enable sites configuration
-  sudo: yes
+  become: yes
   lineinfile:
     dest: "{{ apache['server_root'] }}/conf/{{ apache['service'] }}.conf"
     line: "{{ item }}"
     state: present
   notify: reload apache
   with_items:
-    - "IncludeOptional conf-enabled/*.conf"  
+    - "IncludeOptional conf-enabled/*.conf"
     - "IncludeOptional sites-enabled/*.conf"
-    
