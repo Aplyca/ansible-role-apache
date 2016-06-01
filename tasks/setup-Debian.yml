@@ -13,7 +13,7 @@
   become: yes
   command: a2enconf override
   notify: reload apache
-  when: confd.stat.isdir is defined and confd.stat.isdir == false
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version | version_compare('14.04', 'ge')
 
 - name: Enable override configuration for previous Debian releases
   become: yes

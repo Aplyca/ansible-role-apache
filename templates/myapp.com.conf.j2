@@ -11,8 +11,8 @@
         {% endif %}
     {% endfor %}
 
-    CustomLog {{ apache.logs_dir ~ "/" ~ item.directives.ServerName ~ "_access.log" }} combined
-    ErrorLog {{ apache.logs_dir ~ "/" ~ item.directives.ServerName ~ "_error.log" }}
+    CustomLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.ServerName ~ "_access.log" }} combined
+    ErrorLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.ServerName ~ "_error.log" }}
 </VirtualHost>
 
 {% if item.directives.SSLCertificateFile is defined and item.directives.SSLCertificateKeyFile is defined %}
@@ -32,8 +32,8 @@
         {% endif %}
     {% endfor %}
 
-    CustomLog {{ apache.logs_dir ~ "/" ~ item.directives.ServerName ~ "_access.log" }} combined
-    ErrorLog {{ apache.logs_dir ~ "/" ~ item.directives.ServerName ~ "_error.log" }}
+    CustomLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.ServerName ~ "_access.log" }} combined
+    ErrorLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.ServerName ~ "_error.log" }}
 
 </VirtualHost>
 {% endif %}

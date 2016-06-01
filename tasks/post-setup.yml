@@ -3,7 +3,7 @@
   become: yes
   file:
     src: "../{{ apache.conf_available_path }}/override.conf"
-    path: "{{ apache.server_root }}/{{ apache.conf_enabled_path }}/z10-override.conf"
+    path: "{{ apache.server_root }}/{{ apache.conf_enabled_path }}/override.conf"
     state: link
     force: yes
   notify: reload apache
