@@ -3,3 +3,8 @@
   hosts: all
   roles:
     - { role: Aplyca.Apache, tags: ["apache"] }
+  post_tasks:
+    - name: Test if Apache is installed and running
+      uri:
+        url: "http://localhost"    
+      changed_when: False    
