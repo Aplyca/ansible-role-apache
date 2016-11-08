@@ -10,4 +10,4 @@ test:
   pre:
     - sudo ln -s ansible-role-apache ../Aplyca.Apache
   override:
-    - tests/tests.sh
+    - tests/test.sh

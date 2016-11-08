@@ -1,4 +1,16 @@
 ---
+- name: Ensure language pack is installed
+  become: yes
+  apt:
+    name: "language-pack-en-base"
+
+- name: Adding PPA repo for Apache2
+  become: yes
+  apt_repository:
+    repo: 'ppa:ondrej/apache2'
+  environment:
+      LC_ALL: "C.UTF-8"
+
 - name: Ensure Apache is present using apt
   become: yes
   apt:
@@ -36,15 +48,15 @@
   apache2_module:
     name: "{{ item }}"
     state: present
+    force: yes
   with_items: "{{ apache.enable_modules }}"
   notify: reload apache
-  when: "{{ apache.enable_modules }}"
 
 - name: Disable Apache modules
   become: yes
   apache2_module:
     name: "{{ item }}"
     state: absent
+    force: yes
   with_items: "{{ apache.disable_modules }}"
   notify: reload apache
-  when: "{{ apache.disable_modules }}"
