@@ -38,10 +38,10 @@
 
 - name: Enable virtualhosts
   become: yes
-  command: "a2ensite {{ item.ServerName }}"
+  command: "a2ensite {{ item.directives.ServerName }}"
   with_items: "{{ apache.virtualhosts }}"
   notify: reload apache
-  when: item.ServerName is defined and confd.stat.isdir is defined and confd.stat.isdir == false
+  tags: vhost
 
 - name: Enable Apache modules
   become: yes

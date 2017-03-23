@@ -17,3 +17,4 @@
     force: yes
   with_items: "{{ apache.virtualhosts }}"
   notify: reload apache
+  tags: vhost
