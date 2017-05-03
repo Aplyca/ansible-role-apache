@@ -1,4 +1,5 @@
- # {{ ansible_managed }}
+#jinja2: lstrip_blocks: True
+# {{ ansible_managed }}
 
 <VirtualHost {{ item.listen | default('*:80') }}>
     {% for directive, value in item.directives|dictsort(true) %}
@@ -16,24 +17,26 @@
 </VirtualHost>
 
 {% if item.directives.SSLCertificateFile is defined and item.directives.SSLCertificateKeyFile is defined %}
-<VirtualHost *:443>
-    SSLEngine on
-    <Directory ./>
-        SSLRequireSSL
-    </Directory>
+<IfModule mod_ssl.c>
+    <VirtualHost *:443>
+        SSLEngine on
+        <Directory ./>
+            SSLRequireSSL
+        </Directory>
 
-    {% for directive, value in item.directives|dictsort(true) %}
-        {% if value is string %}
-            {{ directive }} {{ value }}
-        {% elif value is iterable %}
-            {% for element in value %}
-                {{ directive }} {{ element }}
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
+        {% for directive, value in item.directives|dictsort(true) %}
+            {% if value is string %}
+                {{ directive }} {{ value }}
+            {% elif value is iterable %}
+                {% for element in value %}
+                    {{ directive }} {{ element }}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
 
-    CustomLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.ServerName ~ "_access.log" }} combined
-    ErrorLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.ServerName ~ "_error.log" }}
+        CustomLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.ServerName ~ "_access.log" }} combined
+        ErrorLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.ServerName ~ "_error.log" }}
 
-</VirtualHost>
+    </VirtualHost>
+</IfModule>
 {% endif %}

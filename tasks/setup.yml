@@ -44,7 +44,7 @@
   lineinfile:
     dest:  "{{ apache.server_root }}/{{ apache.sites_available_path }}/000-default.conf"
     regexp: "^<VirtualHost .*>$"
-    line: "<VirtualHost {% for port in apache.Listen %} *:{{ port }}{% endfor %} *:443>"
+    line: "<VirtualHost {% for port in apache.Listen %} *:{{ port }}{% endfor %}>"
     state: present
     backrefs: yes
   notify: reload apache

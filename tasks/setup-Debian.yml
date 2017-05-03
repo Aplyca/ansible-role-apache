@@ -36,6 +36,11 @@
   notify: reload apache
   when: confd.stat.isdir is defined and confd.stat.isdir == true
 
+- name: Enable default SSL virtualhost
+  become: yes
+  command: "a2ensite default-ssl"
+  notify: reload apache
+
 - name: Enable virtualhosts
   become: yes
   command: "a2ensite {{ item.directives.ServerName }}"
