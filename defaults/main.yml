@@ -2,11 +2,10 @@
 apache:
   Listen:
     - 80
-  ServerTokens: "Prod"
-  ServerSignature: "Off"
-  SSLProtocol: "all -SSLv2 -SSLv3 -TLSv1"
-  SSLHonorCipherOrder: "on"
-  SSLCipherSuite: "ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS"
+  config:
+    ServerName: "default"
+  ssl:
+    SSLHonorCipherOrder: "on"
   enable_modules:
     - rewrite
     - expires
@@ -15,3 +14,10 @@ apache:
     - autoindex
   virtualhosts: []
   certificates: []
+  sections:   
+    DirectoryMatch:
+      - "/\\.git":
+          - "Require all denied"
+    FilesMatch:
+      - "^\\.ht":
+          - "Require all denied"

@@ -26,6 +26,11 @@ dependencies:
   - { role: Aplyca.Apache }
 ```
 
+Role tags
+---------
+* apache_vhost
+* apache_config
+
 Role Variables
 --------------
 

@@ -23,7 +23,7 @@
 
 - name: Enable override configurations
   become: yes
-  command: a2enconf override
+  command: a2enconf zzz-override
   notify: reload apache
   when: ansible_distribution == "Ubuntu" and ansible_distribution_version | version_compare('14.04', 'ge')
 

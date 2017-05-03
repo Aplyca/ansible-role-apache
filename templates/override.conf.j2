@@ -1,20 +1,55 @@
+#jinja2: lstrip_blocks: True
 # {{ ansible_managed }}
 
 # Global
-Timeout {{ apache["Timeout"] | default("300") }}
-KeepAlive {{ apache["KeepAlive"] | default("On") }}
-MaxKeepAliveRequests {{ apache["MaxKeepAliveRequests"] | default("100") }}
-KeepAliveTimeout {{ apache["KeepAliveTimeout"] | default("5") }}
-LogLevel {{ apache["LogLevel"] | default("warn") }}
-
-# Security
-ServerName {{ apache["ServerName"] | default("server") }}
-ServerTokens {{ apache["ServerTokens"] | default("OS") }}
-ServerSignature {{ apache["ServerSignature"] | default("On") }}
-TraceEnable {{ apache["TraceEnable"] | default("Off") }}
+{% for directive, value in apache.config|dictsort(true) %}
+    {% if value is string or value is number %}
+    	{{ directive }} {{ value }}
+    {% elif value is iterable %}
+        {% for element in value %}
+        	{{ directive }} {{ element }}
+        {% endfor %}
+    {% endif %}
+{% endfor %}
 
 <IfModule mod_ssl.c>
-    SSLCipherSuite {{ apache["SSLCipherSuite"] | default("HIGH:MEDIUM:!aNULL:!MD5") }}
-    SSLHonorCipherOrder {{ apache["SSLHonorCipherOrder"] | default("on") }}
-    SSLProtocol {{ apache["SSLProtocol"] | default("all") }}
+{% for directive, value in apache.ssl|dictsort(true) %}
+    {% if value is string or value is number %}
+        {{ directive }} {{ value }}
+    {% elif value is iterable %}
+        {% for element in value %}
+            {{ directive }} {{ element }}
+        {% endfor %}
+    {% endif %}
+{% endfor %}
 </IfModule>
+
+{% for section in apache.sections.DirectoryMatch | default([]) %}
+	{% for directory, rules in section|dictsort(true) %}
+		<DirectoryMatch "{{ directory }}">
+	        {% for rule in rules %}
+	            {{ rule }}
+	        {% endfor %}
+	    </DirectoryMatch>
+	{% endfor %}
+{% endfor %}
+
+{% for section in apache.sections.FilesMatch | default([]) %}
+	{% for directory, rules in section|dictsort(true) %}
+		<FilesMatch "{{ directory }}">
+	        {% for rule in rules %}
+	            {{ rule }}
+	        {% endfor %}
+	    </FilesMatch>
+	{% endfor %}
+{% endfor %}
+
+{% for section in apache.sections.Directory | default([]) %}
+	{% for directory, rules in section|dictsort(true) %}
+		<Directory "{{ directory }}">
+	        {% for rule in rules %}
+	            {{ rule }}
+	        {% endfor %}
+	    </Directory>
+	{% endfor %}
+{% endfor %}

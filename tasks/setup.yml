@@ -27,14 +27,25 @@
   become: yes
   template:
     src: override.conf.j2
-    dest: "{{ apache.server_root }}/{{ apache.conf_available_path }}/override.conf"
+    dest: "{{ apache.server_root }}/{{ apache.conf_available_path }}/zzz-override.conf"
   notify: reload apache
+  tags: apache_config
 
 - name: Configure MPM prefork
   become: yes
   template:
     src: mpm_prefork.conf.j2
     dest: "{{ apache.server_root }}/{{ apache.mods_available_path }}/mpm_prefork.conf"
+  notify: reload apache
+
+- name: Enable global default virtualhost
+  become: yes
+  lineinfile:
+    dest:  "{{ apache.server_root }}/{{ apache.sites_available_path }}/000-default.conf"
+    regexp: "^<VirtualHost \\*:80>$"
+    line: "<VirtualHost *:*>"
+    state: present
+    backrefs: yes
   notify: reload apache
 
 - name: Make sure the available virtualhosts are present
