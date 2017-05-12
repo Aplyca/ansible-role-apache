@@ -56,6 +56,7 @@
     force: yes
   with_items: "{{ apache.enable_modules }}"
   notify: reload apache
+  tags: apache_modules
 
 - name: Disable Apache modules
   become: yes
@@ -65,3 +66,4 @@
     force: yes
   with_items: "{{ apache.disable_modules }}"
   notify: reload apache
+  tags: apache_modules  
