@@ -1,6 +1,6 @@
 ---
 apache:
-  Listen:
+  listen:
     - 80
   config:
     ServerName: "default"
@@ -13,8 +13,7 @@ apache:
   disable_modules:
     - autoindex
   virtualhosts: []
-  certificates: []
-  sections:   
+  sections:
     DirectoryMatch:
       - "/\\.git":
           - "Require all denied"

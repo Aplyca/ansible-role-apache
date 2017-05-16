@@ -43,7 +43,7 @@
 
 - name: Enable virtualhosts
   become: yes
-  command: "a2ensite {{ item.directives.ServerName }}"
+  command: "a2ensite {{ item.directives.core.ServerName }}"
   with_items: "{{ apache.virtualhosts }}"
   notify: reload apache
   tags: vhost
@@ -66,4 +66,4 @@
     force: yes
   with_items: "{{ apache.disable_modules }}"
   notify: reload apache
-  tags: apache_modules  
+  tags: apache_modules

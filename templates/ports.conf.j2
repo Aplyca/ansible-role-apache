@@ -4,7 +4,7 @@
 # have to change the VirtualHost statement in
 # /etc/apache2/sites-enabled/000-default.conf
 
-{% for port in apache["Listen"] %}
+{% for port in apache.listen %}
 Listen {{ port }}
 {% endfor %}
 

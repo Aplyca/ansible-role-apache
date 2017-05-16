@@ -44,7 +44,7 @@
   lineinfile:
     dest:  "{{ apache.server_root }}/{{ apache.sites_available_path }}/000-default.conf"
     regexp: "^<VirtualHost .*>$"
-    line: "<VirtualHost {% for port in apache.Listen %} *:{{ port }}{% endfor %}>"
+    line: "<VirtualHost {% for port in apache.listen %} *:{{ port }}{% endfor %}>"
     state: present
     backrefs: yes
   notify: reload apache
@@ -54,8 +54,8 @@
   become: yes
   template:
     src: "myapp.com.conf.j2"
-    dest: "{{ apache.server_root }}/{{ apache.sites_available_path }}/{{ item.directives.ServerName }}.conf"
+    dest: "{{ apache.server_root }}/{{ apache.sites_available_path }}/{{ item.directives.core.ServerName }}.conf"
   with_items: "{{ apache.virtualhosts }}"
   notify: reload apache
-  when: item.directives.ServerName is defined
+  when: item.directives.core.ServerName is defined
   tags: apache_vhost

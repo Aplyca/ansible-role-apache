@@ -2,41 +2,56 @@
 # {{ ansible_managed }}
 
 <VirtualHost {{ item.listen | default('*:80') }}>
-    {% for directive, value in item.directives|dictsort(true) %}
-        {% if value is string %}
-            {{ directive }} {{ value }}
-        {% elif value is iterable %}
-            {% for element in value %}
-                {{ directive }} {{ element }}
+    {% for module, config in item.directives|dictsort(true) %}
+        {% if module != "ssl" %}
+            {% if module != "core" %}
+                <IfModule {{ module }}_module>
+            {% endif %}
+            {% for directive, value in config|dictsort(true) %}
+                {% if value is string or value is number %}
+                    {{ directive }} {{ value }}
+                {% elif value is iterable %}
+                    {% for element in value %}
+                        {{ directive }} {{ element }}
+                    {% endfor %}
+                {% endif %}
             {% endfor %}
+            {% if module != "core" %}</IfModule>{% endif %}
         {% endif %}
+
     {% endfor %}
 
-    CustomLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.ServerName ~ "_access.log" }} combined
-    ErrorLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.ServerName ~ "_error.log" }}
+    CustomLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.core.ServerName ~ "_access.log" }} combined
+    ErrorLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.core.ServerName ~ "_error.log" }}
 </VirtualHost>
 
-{% if item.directives.SSLCertificateFile is defined and item.directives.SSLCertificateKeyFile is defined %}
-<IfModule mod_ssl.c>
+{% if item.directives.ssl.SSLCertificateFile is defined and item.directives.ssl.SSLCertificateKeyFile is defined %}
+<IfModule ssl_module>
     <VirtualHost *:443>
         SSLEngine on
         <Directory ./>
             SSLRequireSSL
         </Directory>
 
-        {% for directive, value in item.directives|dictsort(true) %}
-            {% if value is string %}
-                {{ directive }} {{ value }}
-            {% elif value is iterable %}
-                {% for element in value %}
-                    {{ directive }} {{ element }}
-                {% endfor %}
+        {% for module, config in item.directives|dictsort(true) %}
+            {% if module != "core" %}
+                <IfModule {{ module }}_module>
             {% endif %}
+            {% for directive, value in config|dictsort(true) %}
+                {% if value is string or value is number %}
+                    {{ directive }} {{ value }}
+                {% elif value is iterable %}
+                    {% for element in value %}
+                        {{ directive }} {{ element }}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            {% if module != "core" %}</IfModule>{% endif %}
+
         {% endfor %}
 
-        CustomLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.ServerName ~ "_access.log" }} combined
-        ErrorLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.ServerName ~ "_error.log" }}
-
+        CustomLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.core.ServerName ~ "_access.log" }} combined
+        ErrorLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.core.ServerName ~ "_error.log" }}
     </VirtualHost>
 </IfModule>
 {% endif %}

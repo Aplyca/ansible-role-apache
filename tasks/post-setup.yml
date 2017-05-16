@@ -11,8 +11,8 @@
 - name: Make sure the enabled virtualhosts are present
   become: yes
   file:
-    src: "../{{ apache.sites_available_path }}/{{ item.directives.ServerName }}.conf"
-    path: "{{ apache.server_root }}/{{ apache.sites_enabled_path }}/{{ item.directives.ServerName }}.conf"
+    src: "../{{ apache.sites_available_path }}/{{ item.directives.core.ServerName }}.conf"
+    path: "{{ apache.server_root }}/{{ apache.sites_enabled_path }}/{{ item.directives.core.ServerName }}.conf"
     state: link
     force: yes
   with_items: "{{ apache.virtualhosts }}"
