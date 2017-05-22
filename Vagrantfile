@@ -1,4 +1,9 @@
 Vagrant.configure(2) do |config|
+
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+  end
+
   config.vm.define "apache.vagrant", primary: true, autostart: true do |config_machine|
       #Assigning a provider
       config_machine.vm.provider :virtualbox do |virtualbox, override|

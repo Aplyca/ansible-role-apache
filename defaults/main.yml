@@ -20,3 +20,4 @@ apache:
     FilesMatch:
       - "^\\.ht":
           - "Require all denied"
+  packages: []

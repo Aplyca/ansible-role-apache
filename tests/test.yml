@@ -1,5 +1,12 @@
 ---
 apache:
+  packages:
+    - libapache2-mod-fastcgi
+  enable_modules:
+    - rewrite
+    - expires
+    - ssl
+    - fastcgi 
   virtualhosts:
     - directives:
         core:

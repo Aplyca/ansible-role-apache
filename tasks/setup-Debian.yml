@@ -3,6 +3,7 @@
   become: yes
   apt:
     name: "language-pack-en-base"
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version | version_compare('14.04', 'ge')
 
 - name: Adding PPA repo for Apache2
   become: yes
@@ -14,10 +15,19 @@
 - name: Ensure Apache is present using apt
   become: yes
   apt:
-    name: apache2
+    name: "apache2"
     state: present
     update_cache: yes
     cache_valid_time: 86400
+
+- name: Ensure Apache additional packages are present using apt
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 86400
+  with_items: "{{ apache.packages }}"
 
 - include: setup.yml
 
