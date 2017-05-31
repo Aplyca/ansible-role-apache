@@ -25,7 +25,7 @@
     ErrorLog {{ "${APACHE_LOG_DIR}/" ~ item.directives.core.ServerName ~ "_error.log" }}
 </VirtualHost>
 
-{% if item.directives.ssl.SSLCertificateFile is defined and item.directives.ssl.SSLCertificateKeyFile is defined %}
+{% if item.directives.ssl is defined and item.directives.ssl.SSLCertificateFile is defined and item.directives.ssl.SSLCertificateKeyFile is defined %}
 <IfModule ssl_module>
     <VirtualHost *:443>
         SSLEngine on
