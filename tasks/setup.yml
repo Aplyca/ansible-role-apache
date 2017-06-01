@@ -11,6 +11,7 @@
     src: ports.conf.j2
     dest: "{{ apache.server_root }}/ports.conf"
   notify: restart apache
+  tags: apache_ports
 
 - name: Make sure configuration directories are present
   become: yes

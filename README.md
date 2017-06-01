@@ -30,6 +30,7 @@ Role tags
 ---------
 * apache_vhost
 * apache_config
+* apache_ports
 
 Role Variables
 --------------
