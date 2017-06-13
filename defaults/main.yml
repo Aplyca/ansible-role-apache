@@ -11,7 +11,9 @@ apache:
     - expires
     - ssl
   disable_modules:
+    - status
     - autoindex
+    - info
   virtualhosts: []
   sections:
     DirectoryMatch:
