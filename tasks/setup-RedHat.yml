@@ -5,7 +5,7 @@
     name: "{{ apache.service }}"
     state: present
 
-- include: setup.yml
+- include_tasks: setup.yml
 
 - name: Disable default ports configuration
   become: yes
