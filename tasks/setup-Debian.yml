@@ -29,7 +29,7 @@
     cache_valid_time: 86400
   with_items: "{{ apache.packages }}"
 
-- include_tasks: setup.yml
+- import_tasks: setup.yml
 
 - name: Enable override configurations
   become: yes
