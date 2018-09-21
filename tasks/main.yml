@@ -11,4 +11,4 @@
 - include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
-- include_tasks: post-setup.yml
+- import_tasks: post-setup.yml
