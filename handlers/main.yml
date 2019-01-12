@@ -2,14 +2,13 @@
 - name: reload apache
   become: yes
   service:
-    name: "{{ apache['service'] }}"
-    state: reloaded
-    enabled: yes
+      name: "{{ apache.service }}"
+      state: reloaded
+      enabled: yes
 
 - name: restart apache
   become: yes
   service:
-    name: "{{ apache['service'] }}"
-    state: restarted
-    enabled: yes
-
+      name: "{{ apache.service }}"
+      state: restarted
+      enabled: yes

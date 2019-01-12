@@ -2,31 +2,31 @@
 - name: Ensure language pack is installed
   become: yes
   apt:
-    name: "language-pack-en-base"
+      name: "language-pack-en-base"
   when: ansible_distribution == "Ubuntu" and ansible_distribution_version | version_compare('14.04', 'ge')
 
 - name: Adding PPA repo for Apache2
   become: yes
   apt_repository:
-    repo: 'ppa:ondrej/apache2'
+      repo: "ppa:ondrej/apache2"
   environment:
       LC_ALL: "C.UTF-8"
 
 - name: Ensure Apache is present using apt
   become: yes
   apt:
-    name: "apache2"
-    state: present
-    update_cache: yes
-    cache_valid_time: 86400
+      name: "apache2"
+      state: present
+      update_cache: yes
+      cache_valid_time: 86400
 
 - name: Ensure Apache additional packages are present using apt
   become: yes
   apt:
-    name: "{{ item }}"
-    state: present
-    update_cache: yes
-    cache_valid_time: 86400
+      name: "{{ item }}"
+      state: present
+      update_cache: yes
+      cache_valid_time: 86400
   with_items: "{{ apache.packages }}"
 
 - import_tasks: setup.yml
@@ -40,11 +40,11 @@
 - name: Enable override configuration for previous Debian releases
   become: yes
   lineinfile:
-    dest: "{{ apache.server_root }}/{{ apache.service }}.conf"
-    line: "Include conf-enabled/*.conf"
-    state: present
+      dest: "{{ apache.server_root }}/{{ apache.service }}.conf"
+      line: "Include conf-enabled/*.conf"
+      state: present
   notify: reload apache
-  when: confd.stat.isdir is defined and confd.stat.isdir == true
+  when: confd.stat.isdir is defined and confd.stat.isdir
 
 - name: Enable default SSL virtualhost
   become: yes
@@ -61,9 +61,9 @@
 - name: Enable Apache modules
   become: yes
   apache2_module:
-    name: "{{ item }}"
-    state: present
-    force: yes
+      name: "{{ item }}"
+      state: present
+      force: yes
   with_items: "{{ apache.enable_modules }}"
   notify: reload apache
   tags: apache_modules
@@ -71,9 +71,9 @@
 - name: Disable Apache modules
   become: yes
   apache2_module:
-    name: "{{ item }}"
-    state: absent
-    force: yes
+      name: "{{ item }}"
+      state: absent
+      force: yes
   with_items: "{{ apache.disable_modules }}"
   notify: reload apache
   tags: apache_modules
